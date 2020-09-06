@@ -1,0 +1,30 @@
+{
+  "name": "lazylist",
+  "version": "0.1.0",
+  "description": "Data structure in Typescript supporting functional, infinite sequences",
+  "main": "dist/index.js",
+  "files": [
+    "/dist"
+  ],
+  "prepublish": "tsc",
+  "scripts": {
+    "prepublishOnly": "npm build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build": "tsc"
+  },
+  "author": "Ben Mulhern",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@types/jest": "^26.0.10",
+    "immutable": "^4.0.0-rc.12",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2"
+  }
+}
