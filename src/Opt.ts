@@ -1,3 +1,5 @@
+import { Lazy } from "./Lazy"
+
 /*
   Opt - a value may or may not be present (Some or None)
 */
@@ -5,8 +7,8 @@ export abstract class Opt<T> {
   protected constructor(readonly isEmpty: boolean) {}
   readonly isDefined: boolean = !this.isEmpty
 
-  abstract getOrElse(alternative: () => T): T
-  abstract orElse(alternative: () => Opt<T>): Opt<T>
+  abstract getOrElse(alternative: Lazy<T>): T
+  abstract orElse(alternative: Lazy<Opt<T>>): Opt<T>
   abstract get(): T
   abstract map<U>(f: (t: T) => U): Opt<U>
   abstract flatMap<U>(f: (t: T) => Opt<U>): Opt<U>
@@ -26,11 +28,11 @@ export class Some<T> extends Opt<T> {
     super(false)
   }
 
-  getOrElse(alternative: () => T): T {
+  getOrElse(alternative: Lazy<T>): T {
     return this.value
   }
 
-  orElse(alternative: () => Opt<T>): Opt<T> {
+  orElse(alternative: Lazy<Opt<T>>): Opt<T> {
     return this
   }
 
@@ -67,11 +69,11 @@ export class None<T> extends Opt<T> {
     super(true)
   }
 
-  getOrElse(alternative: () => T): T {
+  getOrElse(alternative: Lazy<T>): T {
     return alternative()
   }
 
-  orElse(alternative: () => Opt<T>): Opt<T> {
+  orElse(alternative: Lazy<Opt<T>>): Opt<T> {
     return alternative()
   }
 
@@ -95,3 +97,6 @@ export class None<T> extends Opt<T> {
     return "None"
   }
 }
+
+export const some = <T>(t: T): Some<T> => Some.of(t)
+export const none = <T>(): None<T> => None.of()
