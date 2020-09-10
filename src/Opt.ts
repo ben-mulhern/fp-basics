@@ -110,5 +110,5 @@ export class None<T> extends Opt<T> {
 // Helper functions for instantiation
 export const some = <T>(t: T): Some<T> => Some.of(t)
 export const none = <T>(): None<T> => None.of()
-// Anything falsy goes to none
+// Anything falsy goes to None
 export const opt = <T>(t: T): Opt<T> => (t ? some(t) : none())
