@@ -8,6 +8,7 @@ export abstract class Opt<T> {
   readonly isDefined: boolean = !this.isEmpty
 
   abstract getOrElse(alternative: Lazy<T>): T
+  abstract getOrNull(): T | null
   abstract orElse(alternative: Lazy<Opt<T>>): Opt<T>
   abstract get(): T
   abstract map<U>(f: (t: T) => U): Opt<U>
@@ -29,6 +30,10 @@ export class Some<T> extends Opt<T> {
   }
 
   getOrElse(alternative: Lazy<T>): T {
+    return this.value
+  }
+
+  getOrNull(): T | null {
     return this.value
   }
 
@@ -73,6 +78,10 @@ export class None<T> extends Opt<T> {
     return alternative()
   }
 
+  getOrNull(): T | null {
+    return null
+  }
+
   orElse(alternative: Lazy<Opt<T>>): Opt<T> {
     return alternative()
   }
@@ -98,5 +107,8 @@ export class None<T> extends Opt<T> {
   }
 }
 
+// Helper functions for instantiation
 export const some = <T>(t: T): Some<T> => Some.of(t)
 export const none = <T>(): None<T> => None.of()
+// Anything falsy goes to none
+export const opt = <T>(t: T): Opt<T> => (t ? some(t) : none())
