@@ -99,7 +99,7 @@ export class None<T> extends Opt<T> {
   }
 
   filter(f: (t: T) => boolean): Opt<T> {
-    return new None()
+    return this
   }
 
   toString(): string {
