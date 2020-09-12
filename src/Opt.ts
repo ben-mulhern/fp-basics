@@ -58,7 +58,7 @@ export class Some<T> extends Opt<T> {
   }
 
   toString(): string {
-    return JSON.stringify(this.value)
+    return `Some(${JSON.stringify(this.value)})`
   }
 }
 
